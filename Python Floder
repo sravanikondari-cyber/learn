@@ -1,0 +1,79 @@
+#Reverse a given String without using built-in reverse functions.
+n=input()
+l=len(n)
+i=l-1
+while i>=0:
+    print(n[i],end='')
+    i-=1
+#Input:
+'pace college'
+#Output:
+'egelloc ecap'
+
+#Check if a string is a palindrome
+n=input()
+if(n[::-1]==n):
+    print("It is a palindrom")
+else:
+    print("It is not palindrom")
+'Example 1:'
+# Input:
+'pace college'
+# Output:
+'It is not palindrom'
+
+'Example 2:'
+# Input:
+'madam'
+# Output:
+'It is a palindrom'
+
+#Count the number of vowels and consonants in a string
+n=input()
+vowels={'a','e','i','o','u','A','E','I','O','U'}
+vcount=0
+ccount=0
+for i in n:
+    if i.isalpha():
+        if i in vowels:
+            vcount+=1
+        else:
+            ccount+=1
+print("vowels count",vcount)
+print("consonent count",ccount)
+#Input:
+'Hello World'
+# Output:
+'''vowels count 3
+consonent count 7'''
+
+#Remove all spaces from a given string
+n=input()
+str="".join(n.split())
+#print(n)
+print(str)
+
+#Input:
+'I am your First class'
+#Output:
+'IamyourFirstclass'
+
+Count the frequency of each character in a string
+n=input()
+for i in n:
+    if i!= " ":
+        print(i, n.count(i))
+
+#Input :
+'hello world'
+#Output:
+'''h 1
+e 1
+l 3
+l 3
+o 2
+w 1
+o 2
+r 1
+l 3
+d 1'''
