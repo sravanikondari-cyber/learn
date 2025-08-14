@@ -1,0 +1,152 @@
+mysql> create database rama;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use rama
+Database changed
+#CREATE EMPLOYEES TABLE
+mysql> create table employees(empid int primary key,empname varchar(20),deptId int,salary int,hiredate date);
+Query OK, 0 rows affected (0.07 sec)
+mysql> desc employees;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| empid    | int         | NO   | PRI | NULL    |       |
+| empname  | varchar(20) | YES  |     | NULL    |       |
+| deptId   | int         | YES  |     | NULL    |       |
+| salary   | int         | YES  |     | NULL    |       |
+| hiredate | date        | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.03 sec)
+
+mysql> insert into employees values(101,'sravani',1,50000,'2018-02-12');
+Query OK, 1 row affected (0.03 sec)
+mysql> insert into employees values(102,'lohi',2,60000,'2019-07-10'),(103,'dhana',1,55000,'2020-05-05'),(104,'triveni',3,45000,'2017-09-20');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+❓ DISPLAY ALL RECORDS FROM THE EMPLOYEES TABLE.
+mysql> select *from employees;
++-------+---------+--------+--------+------------+
+| empid | empname | deptId | salary | hiredate   |
++-------+---------+--------+--------+------------+
+|   101 | sravani |      1 |  50000 | 2018-02-12 |
+|   102 | lohi    |      2 |  60000 | 2019-07-10 |
+|   103 | dhana   |      1 |  55000 | 2020-05-05 |
+|   104 | triveni |      3 |  45000 | 2017-09-20 |
++-------+---------+--------+--------+------------+
+4 rows in set (0.00 sec)
+
+❓DISPLAY ONLY EMPNAME AND SALARY OF ALL EMPLOYEES.
+mysql> select empname,salary from employees;
++---------+--------+
+| empname | salary |
++---------+--------+
+| sravani |  50000 |
+| lohi    |  60000 |
+| dhana   |  55000 |
+| triveni |  45000 |
++---------+--------+
+4 rows in set (0.00 sec)
+
+❓LIST EMPLOYEES WHO SALARY IS GREATER THAN 50000.
+mysql> select *from employees where salary>50000;
++-------+---------+--------+--------+------------+
+| empid | empname | deptId | salary | hiredate   |
++-------+---------+--------+--------+------------+
+|   102 | lohi    |      2 |  60000 | 2019-07-10 |
+|   103 | dhana   |      1 |  55000 | 2020-05-05 |
++-------+---------+--------+--------+------------+
+2 rows in set (0.02 sec)
+
+❓FIND EMPLOYEES HIRED BEFORE 2020-01-01.
+mysql> select *from employees where hiredate<'2020-01-01';
++-------+---------+--------+--------+------------+
+| empid | empname | deptId | salary | hiredate   |
++-------+---------+--------+--------+------------+
+|   101 | sravani |      1 |  50000 | 2018-02-12 |
+|   102 | lohi    |      2 |  60000 | 2019-07-10 |
+|   104 | triveni |      3 |  45000 | 2017-09-20 |
++-------+---------+--------+--------+------------+
+3 rows in set (0.02 sec)
+
+❓DISPLAY EMPLOYEES IN DESCENDING ORDER OF SALARY.
+mysql> select *from employees order by salary desc;
++-------+---------+--------+--------+------------+
+| empid | empname | deptId | salary | hiredate   |
++-------+---------+--------+--------+------------+
+|   102 | lohi    |      2 |  60000 | 2019-07-10 |
+|   103 | dhana   |      1 |  55000 | 2020-05-05 |
+|   101 | sravani |      1 |  50000 | 2018-02-12 |
+|   104 | triveni |      3 |  45000 | 2017-09-20 |
++-------+---------+--------+--------+------------+
+4 rows in set (0.00 sec)
+
+❓COUNT TOTAL NUMBER SALARY OF ALL EMPLOYEES
+mysql> select count(*) from employees;
++----------+
+| count(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.03 sec)
+
+❓FIND THE AVERAGE SALARY OF ALL EMPLOYEES.
+mysql> select avg(salary) from employees;
++-------------+
+| avg(salary) |
++-------------+
+|  52500.0000 |
++-------------+
+1 row in set (0.02 sec)
+
+#CREATE DEPARTMENT TABLE
+mysql> create table departments(deptId int primary key,deptname varchar(20));
+Query OK, 0 rows affected (0.06 sec)
+mysql> desc departments;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| deptId   | int         | NO   | PRI | NULL    |       |
+| deptname | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+mysql> insert into departments values(1,'hr'),(2,'it'),(3,'sales');
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql> select *from departments;
++--------+----------+
+| deptId | deptname |
++--------+----------+
+|      1 | hr       |
+|      2 | it       |
+|      3 | sales    |
++--------+----------+
+3 rows in set (0.00 sec)
+
+❓FIND ALL EMPLOYEES WHO BELONG TO THE IT DEPARTMENT.
+mysql> select e.* from employees e join departments d on e.deptid = d.deptid where d.deptname='it';
++-------+---------+--------+--------+------------+
+| empid | empname | deptId | salary | hiredate   |
++-------+---------+--------+--------+------------+
+|   102 | lohi    |      2 |  60000 | 2019-07-10 |
++-------+---------+--------+--------+------------+
+1 row in set (0.01 sec)
+
+❓FIND THE MAXIMUM SALARY OF ALL EMPLOYEES.
+mysql> select deptid,max(salary) from employees group by deptid;
++--------+-------------+
+| deptid | max(salary) |
++--------+-------------+
+|      1 |       55000 |
+|      2 |       60000 |
+|      3 |       45000 |
++--------+-------------+
+3 rows in set (0.01 sec)
+
+❓FIND DEPARTMENTS HAVING MORE THAN 1 EMPLOYEE.
+mysql> select deptid, count(empid) from employees group by deptid having count(empid)>1;
++--------+--------------+
+| deptid | count(empid) |
++--------+--------------+
+|      1 |            2 |
++--------+--------------+
+1 row in set (0.00 sec)
