@@ -150,3 +150,61 @@ mysql> select deptid, count(empid) from employees group by deptid having count(e
 |      1 |            2 |
 +--------+--------------+
 1 row in set (0.00 sec)
+
+❓DISPLAY EMPLOYEES WHOSE NAMES START WITH 'A'.
+mysql> select *from employees where empname like 'a%';
+Empty set (0.00 sec)
+mysql> select * from employees where empname like 's%';
++-------+---------+--------+--------+------------+
+| empid | empname | deptId | salary | hiredate   |
++-------+---------+--------+--------+------------+
+|   101 | sravani |      1 |  50000 | 2018-02-12 |
++-------+---------+--------+--------+------------+
+1 row in set (0.00 sec)
+
+❓FIND EMPLOYEES WHOSE SALARY IS BETWEEN 45,000 AND 60000.
+mysql> select *from employees where salary between 45000 and 60000;
++-------+---------+--------+--------+------------+
+| empid | empname | deptId | salary | hiredate   |
++-------+---------+--------+--------+------------+
+|   101 | sravani |      1 |  50000 | 2018-02-12 |
+|   102 | lohi    |      2 |  60000 | 2019-07-10 |
+|   103 | dhana   |      1 |  55000 | 2020-05-05 |
+|   104 | triveni |      3 |  45000 | 2017-09-20 |
++-------+---------+--------+--------+------------+
+4 rows in set (0.00 sec)
+
+❓SHOW THE DEPARTMENT NAME OF EACH EMPLOYEE(JOIN QUERY).
+mysql> select e.empid,e.empname,d.deptname,e.salary,e.hiredate from employees e join departments d on e.deptId=d.deptId;
++-------+---------+----------+--------+------------+
+| empid | empname | deptname | salary | hiredate   |
++-------+---------+----------+--------+------------+
+|   101 | sravani | hr       |  50000 | 2018-02-12 |
+|   102 | lohi    | it       |  60000 | 2019-07-10 |
+|   103 | dhana   | hr       |  55000 | 2020-05-05 |
+|   104 | triveni | sales    |  45000 | 2017-09-20 |
++-------+---------+----------+--------+------------+
+4 rows in set (0.01 sec)
+
+❓FIND THE NUMBER OF EMPLOYEES IN EACH DEPARTMENT.
+mysql> select d.deptname,count(empid) from employees e join departments d on e.deptid=d.deptid group by d.deptname;
++----------+--------------+
+| deptname | count(empid) |
++----------+--------------+
+| hr       |            2 |
+| it       |            1 |
+| sales    |            1 |
++----------+--------------+
+3 rows in set (0.00 sec)
+
+❓DISPLAY ALL EMPLOYEES, INCLUDING THOSE WITHOUT A DEPARTMENT(LEFT JOIN).
+mysql> select e.*,d.deptname from employees e left join departments d on e.deptid=d.deptid;
++-------+---------+--------+--------+------------+----------+
+| empid | empname | deptId | salary | hiredate   | deptname |
++-------+---------+--------+--------+------------+----------+
+|   101 | sravani |      1 |  50000 | 2018-02-12 | hr       |
+|   102 | lohi    |      2 |  60000 | 2019-07-10 | it       |
+|   103 | dhana   |      1 |  55000 | 2020-05-05 | hr       |
+|   104 | triveni |      3 |  45000 | 2017-09-20 | sales    |
++-------+---------+--------+--------+------------+----------+
+4 rows in set (0.02 sec)
